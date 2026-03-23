@@ -19,7 +19,7 @@ st.markdown("""
 # 2. 데이터 로드 (절대 경로)
 @st.cache_data
 def load_data():
-    df = pd.read_csv("C:\\Users\\jeong\\Desktop\\portfolio\\random_seoul\\data.csv", encoding='utf-8')
+    df = pd.read_csv("data.csv", encoding='utf-8')
     def get_line_name(x):
         import re
         match = re.search(r'\d+', str(x))
@@ -43,7 +43,7 @@ if 'step' not in st.session_state:
 if st.session_state.step == 1:
     st.markdown('<div class="step-box"><h3>🗺️ 오늘의 여행지는 어디?</h3></div>', unsafe_allow_html=True)
     
-    # [추가] 시작 화면 이미지 (경로를 네 파일에 맞춰 수정해!)
+    # [추가] 시작 화면 이미지
     try:
         st.image("image\gacha.png", use_container_width=True)
     except:
