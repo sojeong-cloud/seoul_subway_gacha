@@ -45,7 +45,7 @@ if st.session_state.step == 1:
     
     # [추가] 시작 화면 이미지
     try:
-        st.image("image/gacha.png", use_container_width=True)
+        st.image("image/gacha2.png", use_container_width=True)
     except:
         st.info("시작 화면 이미지를 불러올 수 없습니다. (경로 확인 필요)")
 
