@@ -45,13 +45,13 @@ if st.session_state.step == 1:
     
     # [추가] 시작 화면 이미지
     try:
-        st.image("image\gacha.png", use_container_width=True)
+        st.image("image/gacha.png", use_container_width=True)
     except:
         st.info("시작 화면 이미지를 불러올 수 없습니다. (경로 확인 필요)")
 
     if st.button("🎰 호선 번호 뽑기 시작!"):
         placeholder = st.empty()
-        placeholder.image("image\gacha.gif", use_container_width=True)
+        placeholder.image("image/gacha.gif", use_container_width=True)
         time.sleep(2)
         placeholder.empty()
         
@@ -70,13 +70,13 @@ elif st.session_state.step == 2:
     
     # [추가] 호선 선택 시 보여줄 이미지
     try:
-        st.image("image\gacha2.png", use_container_width=True)
+        st.image("image/gacha2.png", use_container_width=True)
     except:
         st.info("호선 선택 이미지를 불러올 수 없습니다.")
 
     if st.button(f"🎲 {line} 역 번호 추첨하기!"):
         placeholder = st.empty()
-        placeholder.image("image\gacha.gif", use_container_width=True)
+        placeholder.image("image/gacha.gif", use_container_width=True)
         time.sleep(2)
         placeholder.empty()
         
