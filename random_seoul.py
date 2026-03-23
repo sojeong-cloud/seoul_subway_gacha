@@ -43,17 +43,17 @@ if 'step' not in st.session_state:
 if st.session_state.step == 1:
     st.markdown('<div class="step-box"><h3>🗺️ 오늘의 여행지는 어디?</h3></div>', unsafe_allow_html=True)
     
-    # [추가] 시작 화면 이미지
-    try:
-        st.image("image/gacha2.png", use_container_width=True)
-    except:
-        st.info("시작 화면 이미지를 불러올 수 없습니다. (경로 확인 필요)")
+    #이미지가 들어갈 빈박스 
+    image_place = st.empty()
+    
+    #gacha2.png
+    image_place.image("image/gacha2.png", use_container_width=True)
 
     if st.button("🎰 호선 번호 뽑기 시작!"):
-        placeholder = st.empty()
-        placeholder.image("image/gacha.gif", use_container_width=True)
-        time.sleep(2)
-        placeholder.empty()
+        #버튼 누르자마자 기존 이미지(gacha2)를 지우고 gacha.gif로 교체
+        image_place.image("image/gacha.gif", use_container_width=True)
+        time.sleep(2) # 2초 동안 움짤 감상
+        
         
         lucky_line_num = random.randint(1, 9)
         st.session_state.selected_line = f"{lucky_line_num}호선"
