@@ -6,19 +6,52 @@ import time
 # 1. 페이지 설정
 st.set_page_config(page_title="서울 지하철 랜덤 여행", page_icon="🚇", layout="centered")
 
-# 디자인 CSS
+# 디자인 CSS (라이트 모드에서도 버튼 글씨가 보이도록 고정)
 st.markdown("""
     <style>
+    /* 기본 배경 및 텍스트 설정 */
     .stApp { background-color: #121212; color: white; }
     .main-title { color: #FFDD59; text-align: center; font-size: 40px; font-weight: bold; margin-bottom: 20px; }
     .step-box { background-color: #1E1E1E; padding: 20px; border-radius: 15px; border: 2px solid #333; margin-bottom: 20px; text-align: center; }
     .result-card { background-color: #2D3436; padding: 30px; border-radius: 20px; border: 3px solid #FFDD59; text-align: center; }
+    
+    /* 모든 버튼 스타일 강제 고정 (글씨 안 보이는 현상 해결) */
+    div.stButton > button {
+        background-color: #FFDD59 !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        border-radius: 10px !important;
+        border: none !important;
+        width: 100% !important;
+        height: 50px !important;
+        font-size: 18px !important;
+    }
+
+    /* 맛집 검색(링크) 버튼 스타일 고정 */
+    .stLinkButton a {
+        background-color: #FFDD59 !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        text-decoration: none !important;
+        display: block !important;
+        text-align: center !important;
+        padding: 10px !important;
+        border-radius: 10px !important;
+        font-size: 18px !important;
+    }
+
+    /* 버튼 호버 효과 */
+    div.stButton > button:hover {
+        background-color: #FFC107 !important;
+        color: #000000 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# 2. 데이터 로드 (절대 경로)
+# 2. 데이터 로드 (상대 경로 및 캐싱)
 @st.cache_data
 def load_data():
+    # 깃허브 서버(리눅스) 환경에 맞춰 인코딩 및 경로 설정
     df = pd.read_csv("data.csv", encoding='utf-8')
     def get_line_name(x):
         import re
@@ -35,6 +68,7 @@ except Exception as e:
 
 st.markdown('<div class="main-title">🚇 서울 지하철 랜덤 가챠</div>', unsafe_allow_html=True)
 
+# 세션 상태 관리
 if 'step' not in st.session_state:
     st.session_state.step = 1
     st.session_state.selected_line = None
@@ -43,18 +77,22 @@ if 'step' not in st.session_state:
 if st.session_state.step == 1:
     st.markdown('<div class="step-box"><h3>🗺️ 오늘의 여행지는 어디?</h3></div>', unsafe_allow_html=True)
     
-    #이미지가 들어갈 빈박스 
+    # 이미지 전용 빈 박스 생성
     image_place = st.empty()
     
-    #gacha2.png
-    image_place.image("image/gacha2.png", use_container_width=True)
+    # 기본 이미지 표시
+    try:
+        image_place.image("image/gacha2.png", use_container_width=True)
+    except:
+        st.info("시작 이미지를 찾을 수 없습니다.")
 
     if st.button("🎰 호선 번호 뽑기 시작!"):
-        #버튼 누르자마자 기존 이미지(gacha2)를 지우고 gacha.gif로 교체
+        # 버튼 누르면 움짤로 교체
         image_place.image("image/gacha.gif", use_container_width=True)
-        time.sleep(2) # 2초 동안 움짤 감상
+        time.sleep(2)
+        image_place.empty() # 움짤 끝난 후 비우기
         
-        
+        # 1~9호선 중 무작위 선택
         lucky_line_num = random.randint(1, 9)
         st.session_state.selected_line = f"{lucky_line_num}호선"
         st.session_state.step = 2
@@ -68,17 +106,18 @@ elif st.session_state.step == 2:
     
     st.markdown(f'<div class="step-box"><h3>✅ {line} 당첨!</h3><p>총 <b>{total_count}</b>개의 역 중에서 운명의 장소를 골라보세요.</p></div>', unsafe_allow_html=True)
     
-    # [추가] 호선 선택 시 보여줄 이미지
+    # 이미지 전용 빈 박스 생성
+    image_place = st.empty()
     try:
-        st.image("image/gacha2.png", use_container_width=True)
+        image_place.image("image/gacha2.png", use_container_width=True)
     except:
-        st.info("호선 선택 이미지를 불러올 수 없습니다.")
+        pass
 
     if st.button(f"🎲 {line} 역 번호 추첨하기!"):
-        placeholder = st.empty()
-        placeholder.image("image/gacha.gif", use_container_width=True)
+        # 버튼 누르면 움짤로 교체
+        image_place.image("image/gacha.gif", use_container_width=True)
         time.sleep(2)
-        placeholder.empty()
+        image_place.empty() # 비우기
         
         if total_count > 0:
             lucky_idx = random.randint(0, total_count - 1)
@@ -93,6 +132,7 @@ elif st.session_state.step == 2:
                 </div>
             """, unsafe_allow_html=True)
             
+            # 맛집 검색 링크 버튼
             search_query = f"{final_station['전철역명']} 맛집"
             map_url = f"https://map.naver.com/v5/search/{search_query}"
             st.link_button(f"🍴 {final_station['전철역명']} 맛집 검색", map_url)
