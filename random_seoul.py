@@ -141,7 +141,19 @@ elif st.session_state.step == 2:
         st.session_state.step = 1
         st.rerun()
 
-# 앱 하단에 조회수 배지 추가 (이미지 함수 사용)
-st.markdown("---")
-hits_url = "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fseoulsubwaygacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"
-st.image(hits_url)
+# --- 조회수 카운트 로직 ---
+if 'view_count' not in st.session_state:
+    st.session_state.view_count = 0
+
+# 앱이 실행될 때마다 1씩 증가
+st.session_state.view_count += 1
+
+# --- 오른쪽 하단 텍스트 출력 ---
+st.markdown(
+    f"""
+    <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
+        조회수: {st.session_state.view_count}
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
