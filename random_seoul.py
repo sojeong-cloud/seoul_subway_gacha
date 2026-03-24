@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import random
 import time
+from streamlit_extras.let_it_snow import let_it_snow #폭죽효과 가져오기
 
 # 1. 페이지 설정
 st.set_page_config(page_title="메트로 가챠", page_icon="🚇", layout="centered")
@@ -123,7 +124,8 @@ elif st.session_state.step == 2:
             lucky_idx = random.randint(0, total_count - 1)
             final_station = stations.iloc[lucky_idx]
             
-            st.balloons()
+            #st.balloons() #벌룬
+            let_it_snow() #폭죽 효과
             st.markdown(f"""
                 <div class="result-card">
                     <h2 style="color: #FFDD59;">🎉 {lucky_idx + 1}번 역 당첨!</h2>
