@@ -66,7 +66,7 @@ except Exception as e:
     st.error(f"데이터 읽기 오류: {e}")
     st.stop()
 
-st.markdown('<div class="main-title">🚇 메트로 가챠/div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">🚇 메트로 가챠 </div>', unsafe_allow_html=True)
 
 # 세션 상태 관리
 if 'step' not in st.session_state:
