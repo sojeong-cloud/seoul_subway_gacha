@@ -158,7 +158,7 @@ if os.path.exists(counter_file):
 else:
     current_views = 0
 
-# 3. 조회수 1 증가 (세션 시작할 때만 올리고 싶다면 로직 추가 가능하지만, 일단 심플하게!)
+# 3. 조회수 1 증가 
 if 'is_counted' not in st.session_state:
     current_views += 1
     st.session_state.is_counted = True
@@ -166,7 +166,7 @@ if 'is_counted' not in st.session_state:
     with open(counter_file, "w") as f:
         json.dump({"views": current_views}, f)
 
-# 4. 오른쪽 하단 출력 (네가 원한 그레이 색상)
+# 4. 오른쪽 하단 출력 
 st.markdown(
     f"""
     <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
