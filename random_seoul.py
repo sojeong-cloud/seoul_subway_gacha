@@ -141,8 +141,7 @@ elif st.session_state.step == 2:
         st.session_state.step = 1
         st.rerun()
 
-# 앱 하단에 구분선과 조회수 배지 추가
+# 앱 하단에 조회수 배지 추가 (이미지 함수 사용)
 st.markdown("---")
-st.markdown(
-    "![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fseoulsubwaygacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)"
-)
+hits_url = "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fseoulsubwaygacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"
+st.image(hits_url)
