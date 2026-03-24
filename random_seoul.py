@@ -124,8 +124,8 @@ elif st.session_state.step == 2:
             lucky_idx = random.randint(0, total_count - 1)
             final_station = stations.iloc[lucky_idx]
             
-            #st.balloons() #벌룬
-            let_it_snow() #폭죽 효과
+            st.balloons() #벌룬
+            #let_it_snow() #폭죽 효과
             st.markdown(f"""
                 <div class="result-card">
                     <h2 style="color: #FFDD59;">🎉 {lucky_idx + 1}번 역 당첨!</h2>
@@ -149,26 +149,32 @@ import os
 # 1. 조회수 저장용 파일 경로
 counter_file = "view_count.json"
 
-# 2. 기존 조회수 읽어오기 (파일이 없으면 0부터 시작)
-if os.path.exists(counter_file):
-    with open(counter_file, "r") as f:
-        try:
-            data = json.load(f)
-            current_views = data.get("views", 0)
-        except:
-            current_views = 0
-else:
-    current_views = 0
-
-# 3. 조회수 1 증가 
+# 2. 조회수 로직 (세션당 딱 한 번만 실행)
 if 'is_counted' not in st.session_state:
+    # 파일이 있으면 읽고, 없으면 0
+    if os.path.exists(counter_file):
+        with open(counter_file, "r") as f:
+            try:
+                data = json.load(f)
+                current_views = data.get("views", 0)
+            except:
+                current_views = 0
+    else:
+        current_views = 0
+
+    # 조회수 1 증가 및 파일 저장
     current_views += 1
-    st.session_state.is_counted = True
-    # 파일에 새 숫자 저장
     with open(counter_file, "w") as f:
         json.dump({"views": current_views}, f)
+    
+    # 세션에 현재 조회수와 카운트 완료 상태 저장
+    st.session_state.view_count_now = current_views
+    st.session_state.is_counted = True
+else:
+    # 이미 카운트했다면 저장된 숫만 가져오기
+    current_views = st.session_state.view_count_now
 
-# 4. 오른쪽 하단 출력 
+# 3. 오른쪽 하단 출력 (그레이 색상)
 st.markdown(
     f"""
     <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
@@ -177,5 +183,3 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
-
-#업데이트 확인
