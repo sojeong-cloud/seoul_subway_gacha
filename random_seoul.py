@@ -4,7 +4,7 @@ import random
 import time
 
 # 1. 페이지 설정
-st.set_page_config(page_title="서울 지하철 랜덤 여행", page_icon="🚇", layout="centered")
+st.set_page_config(page_title="메트로 가챠", page_icon="🚇", layout="centered")
 
 # 디자인 CSS (라이트 모드에서도 버튼 글씨가 보이도록 고정)
 st.markdown("""
@@ -66,7 +66,7 @@ except Exception as e:
     st.error(f"데이터 읽기 오류: {e}")
     st.stop()
 
-st.markdown('<div class="main-title">🚇 서울 지하철 랜덤 가챠</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-title">🚇 메트로 가챠/div>', unsafe_allow_html=True)
 
 # 세션 상태 관리
 if 'step' not in st.session_state:
