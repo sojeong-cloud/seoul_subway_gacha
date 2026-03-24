@@ -149,7 +149,11 @@ import os
 # 1. 조회수 저장용 파일 경로
 counter_file = "view_count.json"
 
-# 2. 조회수 로직 (세션당 딱 한 번만 실행)
+# 2. 초기 세션 상태 설정 (변수 누락 방지)
+if 'view_count_now' not in st.session_state:
+    st.session_state.view_count_now = 0
+
+# 3. 조회수 로직 (세션당 딱 한 번만 실행)
 if 'is_counted' not in st.session_state:
     # 파일이 있으면 읽고, 없으면 0
     if os.path.exists(counter_file):
@@ -164,17 +168,20 @@ if 'is_counted' not in st.session_state:
 
     # 조회수 1 증가 및 파일 저장
     current_views += 1
-    with open(counter_file, "w") as f:
-        json.dump({"views": current_views}, f)
+    try:
+        with open(counter_file, "w") as f:
+            json.dump({"views": current_views}, f)
+    except:
+        pass # 파일 쓰기 권한 이슈 대비
     
-    # 세션에 현재 조회수와 카운트 완료 상태 저장
+    # 세션에 저장
     st.session_state.view_count_now = current_views
     st.session_state.is_counted = True
 else:
-    # 이미 카운트했다면 저장된 숫만 가져오기
+    # 이미 카운트했다면 저장된 값 사용
     current_views = st.session_state.view_count_now
 
-# 3. 오른쪽 하단 출력 (그레이 색상)
+# 4. 오른쪽 하단 출력 (그레이 색상)
 st.markdown(
     f"""
     <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
