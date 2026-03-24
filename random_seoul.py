@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import random
 import time
-from streamlit_extras.let_it_snow import let_it_snow #폭죽효과 가져오기
+#from streamlit_extras.let_it_snow import let_it_snow #폭죽효과 가져오기
 
 # 1. 페이지 설정
 st.set_page_config(page_title="메트로 가챠", page_icon="🚇", layout="centered")
