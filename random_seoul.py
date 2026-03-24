@@ -141,18 +141,36 @@ elif st.session_state.step == 2:
         st.session_state.step = 1
         st.rerun()
 
-# --- 조회수 카운트 로직 ---
-if 'view_count' not in st.session_state:
-    st.session_state.view_count = 0
+import json
+import os
 
-# 앱이 실행될 때마다 1씩 증가
-st.session_state.view_count += 1
+# 1. 조회수 저장용 파일 경로
+counter_file = "view_count.json"
 
-# --- 오른쪽 하단 텍스트 출력 ---
+# 2. 기존 조회수 읽어오기 (파일이 없으면 0부터 시작)
+if os.path.exists(counter_file):
+    with open(counter_file, "r") as f:
+        try:
+            data = json.load(f)
+            current_views = data.get("views", 0)
+        except:
+            current_views = 0
+else:
+    current_views = 0
+
+# 3. 조회수 1 증가 (세션 시작할 때만 올리고 싶다면 로직 추가 가능하지만, 일단 심플하게!)
+if 'is_counted' not in st.session_state:
+    current_views += 1
+    st.session_state.is_counted = True
+    # 파일에 새 숫자 저장
+    with open(counter_file, "w") as f:
+        json.dump({"views": current_views}, f)
+
+# 4. 오른쪽 하단 출력 (네가 원한 그레이 색상)
 st.markdown(
     f"""
     <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
-        조회수: {st.session_state.view_count}
+        누적 조회수: {current_views}
     </div>
     """, 
     unsafe_allow_html=True
