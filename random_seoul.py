@@ -190,3 +190,9 @@ st.markdown("""
         </a>
     </div>
 """, unsafe_allow_html=True)
+
+
+# 4. 오른쪽 하단 출력 (그레이 색상)
+st.markdown(
+    f"""
+    <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
