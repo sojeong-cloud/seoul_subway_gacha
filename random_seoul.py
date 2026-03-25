@@ -1,11 +1,3 @@
-오정, 구글 시트에서 가져온 **'진짜 누적 조회수'**를 화면 하단에 다시 예쁘게 띄워줄게!
-
-기존 json 방식은 숫자가 자꾸 리셋됐지만, 이제는 구글 시트에서 숫자를 읽어오기 때문에 서버가 꺼졌다 켜져도 숫자가 그대로 유지될 거야. 포트폴리오에서도 "실시간 DB 연동"을 보여주기 딱 좋지.
-
-🛠️ 하단 조회수 출력 기능이 포함된 전체 코드
-이 코드를 random_seoul.py에 통째로 덮어쓰기 해줘. 하단에 회색 글씨로 깔끔하게 나오도록 세팅했어.
-
-Python
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
