@@ -190,3 +190,11 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
+
+st.markdown("""
+    <div style="text-align: center; margin-top: 50px;">
+        <hr style="border: 0.5px solid #333;">
+        <p style="color: #666; font-size: 12px;">TOTAL VIEWS</p>
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fsubway-gacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Hits">
+    </div>
+""", unsafe_allow_html=True)
