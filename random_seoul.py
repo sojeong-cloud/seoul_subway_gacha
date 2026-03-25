@@ -1,9 +1,3 @@
-오정, 미안! 한눈에 볼 수 있게 중간 생략 없이 처음부터 끝까지 통째로 다 짜줄게.
-
-이 코드를 그대로 복사해서 random_seoul.py에 덮어쓰기 하면 돼. 조회수 로직, 디자인 CSS, 지하철 뽑기 기능까지 완벽하게 합쳐놨어.
-
-🚇 메트로 가챠 (Metro Gacha) - 전체 통합 코드
-Python
 import streamlit as st
 import pandas as pd
 import random
