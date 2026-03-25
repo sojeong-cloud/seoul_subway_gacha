@@ -181,20 +181,12 @@ else:
     # 이미 카운트했다면 저장된 값 사용
     current_views = st.session_state.view_count_now
 
-# 4. 오른쪽 하단 출력 (그레이 색상)
-st.markdown(
-    f"""
-    <div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">
-        누적 조회수: {current_views}
-    </div>
-    """, 
-    unsafe_allow_html=True
-)
-
 st.markdown("""
     <div style="text-align: center; margin-top: 50px;">
-        <hr style="border: 0.5px solid #333;">
-        <p style="color: #666; font-size: 12px;">TOTAL VIEWS</p>
-        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fsubway-gacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Hits">
+        <hr style="border: 0.2px solid #333;">
+        <p style="color: #666; font-size: 12px; margin-bottom: 10px;">TOTAL VIEWS</p>
+        <a href="https://hits.seeyoufarm.com">
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fseoulsubwaygacha.streamlit.app&count_bg=%23FFDD59&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=VISITORS&edge_flat=false" alt="Hits">
+        </a>
     </div>
 """, unsafe_allow_html=True)
