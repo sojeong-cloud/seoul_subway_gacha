@@ -97,3 +97,22 @@ if df is not None:
 # 4. 하단 조회수
 st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">누적 조회수: {current_views}</div>', unsafe_allow_html=True)
 st.write("---")
+
+
+# --- 💬 방문자 피드백 (구글 폼 최종본) ---
+st.write("---")
+st.subheader("💬 다 어디서 보고 오신건가요?")
+
+# 설문지 실제 주소 (임베딩용으로 변환)
+google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSctHf3pKpaTY6qUvo7KrEUpL6Zh2HXJF-ne-TxdCzl41PMw4g/viewform?embedded=true"
+
+components.iframe(google_form_url, height=800, scrolling=True)
+
+# 만약 안 보일 때를 대비한 안내 버튼 (노란색 디자인 유지)
+st.markdown("""
+    <div style="text-align: center; margin-top: -10px; margin-bottom: 10px;">
+        <p style="color: gray; font-size: 0.9rem;">설문지가 안 보이시나요? 아래 버튼을 눌러주세요!</p>
+    </div>
+""", unsafe_allow_html=True)
+
+st.link_button("📢 직접 의견 남기러 가기", google_form_url)
