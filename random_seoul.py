@@ -97,25 +97,36 @@ if df is not None:
 # 4. 하단 조회수 및 Giscus
 st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">누적 조회수: {current_views}</div>', unsafe_allow_html=True)
 st.write("---")
+# --- 💬 Giscus 댓글창  ---
+st.write("---")
 st.subheader("💬 다 어디서 보고 오신건가요")
 
 
-giscus_code = """
+repo_name = "sojeong-cloud/seoul_subway_gacha"
+repo_id = "R_kgDORu1prA"
+category_id = "DIC_kwDORu1prM4C5UQq" # General이면 General용 ID 확인!
+
+giscus_script = f"""
 <div class="giscus"></div>
 <script src="https://giscus.app/client.js"
-        data-repo="sojeong-cloud/seoul_subway_gacha"
-        data-repo-id="R_kgDORu1prA"
+        data-repo="{sojeong-cloud/seoul_subway_gacha}"
+        data-repo-id="{R_kgDORu1prA}"
         data-category="General"
-        data-category-id="DIC_kwDORu1prM4C5UQq"
-        data-mapping="pathname"
+        data-category-id="{DIC_kwDORu1prM4C5UQq}"
+        data-mapping="title"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
-        data-input-position="top"
+        data-input-position="bottom"
         data-theme="dark"
         data-lang="ko"
         crossorigin="anonymous"
         async>
 </script>
+<style>
+    .giscus {{ margin-top: 20px; }}
+</style>
 """
-components.html(giscus_code, height=800, scrolling=True)
+
+# 2. 스트림릿 전용 컴포넌트로 실행
+components.html(giscus_script, height=800, scrolling=True)
