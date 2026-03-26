@@ -167,7 +167,7 @@ st.markdown(
 
 # --- 💬 Giscus 댓글창 (맨 밑에 추가) ---
 st.write("---")
-st.subheader("💬 하고 싶은 말을 남겨주세!")
+st.subheader("💬 하고 싶은 말을 남겨주세요!")
 
 components.html(
     f"""
