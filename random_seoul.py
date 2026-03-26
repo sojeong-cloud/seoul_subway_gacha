@@ -4,7 +4,7 @@ import random
 import time
 import json
 import os
-
+import streamlit.components.v1 as components
 
 # 1. 조회수 로직 (에러 방지 처리)
 counter_file = "view_count.json"
