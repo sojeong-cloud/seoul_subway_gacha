@@ -99,20 +99,21 @@ st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; mar
 st.write("---")
 
 
-# --- 💬 방문자 피드백 (구글 폼 최종본) ---
+# --- 💬 방문자 피드백 (디자인 수정 버전) ---
 st.write("---")
-st.subheader("💬 의견을 남겨주세요!")
+st.markdown('<h3 style="text-align: center;">💬 의견을 남겨주세요!</h3>', unsafe_allow_html=True)
 
-# 설문지 실제 주소 (임베딩용으로 변환)
-google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSctHf3pKpaTY6qUvo7KrEUpL6Zh2HXJF-ne-TxdCzl41PMw4g/viewform?embedded=true"
 
-components.iframe(google_form_url, height=800, scrolling=True)
+my_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSctHf3pKpaTY6qUvo7KrEUpL6Zh2HXJF-ne-TxdCzl41PMw4g/viewform?embedded=true"
 
-# 만약 안 보일 때를 대비한 안내 버튼 (노란색 디자인 유지)
-st.markdown("""
-    <div style="text-align: center; margin-top: -10px; margin-bottom: 10px;">
-        <p style="color: gray; font-size: 0.9rem;">설문지가 안 보이시나요? 아래 버튼을 눌러주세요!</p>
+# 폼 주변에 어두운 박스(#1E1E1E)
+st.markdown(f"""
+    <div style="background-color: #1E1E1E; padding: 15px; border-radius: 15px; border: 1px solid #333;">
+        <iframe src="{my_form_url}" 
+                width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">로드 중…</iframe>
     </div>
 """, unsafe_allow_html=True)
 
-st.link_button("📢 직접 의견 남기러 가기", google_form_url)
+# 하단 직접 가기 버튼
+st.markdown("<br>", unsafe_allow_html=True)
+st.link_button("📢 직접 의견 남기러 가기", my_form_url)
