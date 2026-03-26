@@ -100,11 +100,14 @@ if df is not None:
 # 5. 하단 조회수
 st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">누적 조회수: {current_views}</div>', unsafe_allow_html=True)
 
-# 6. 💬 Giscus 댓글창 (절대 안 깨지는 주입 방식)
+# --- 💬 Giscus 댓글창 (강제 로딩 버전) ---
 st.write("---")
 st.subheader("💬 다 어디서 보고 오신건가요")
 
-giscus_html = """
+# 카테고리 ID가 General용인지 다시 한번 확인해줘!
+# 만약 General로 바꿨다면 보통 ID가 새로 발급돼.
+giscus_script = """
+<div class="giscus"></div>
 <script src="https://giscus.app/client.js"
         data-repo="sojeong-cloud/seoul_subway_gacha"
         data-repo-id="R_kgDORu1prA"
@@ -121,4 +124,5 @@ giscus_html = """
         async>
 </script>
 """
-components.html(giscus_html, height=600, scrolling=True)
+
+components.html(giscus_script, height=600, scrolling=True)
