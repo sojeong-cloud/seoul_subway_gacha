@@ -65,26 +65,28 @@ if df is not None:
     if 'step' not in st.session_state:
         st.session_state.step = 1
 
+    # --- 1단계: 호선 뽑기 ---
     if st.session_state.step == 1:
         st.markdown('<div class="step-box"><h3>🗺️ 오늘의 여행지는 어디?</h3></div>', unsafe_allow_html=True)
         image_place = st.empty()
         image_place.image("image/gacha2.png", use_container_width=True)
-        if st.button("🎰 호선 번호 뽑기 시작!"):
-            image_place.image("image/gacha.gif", use_container_width=True)
-            time.sleep(1.5)
-            st.session_state.selected_line = f"{random.randint(1, 9)}호선"
-            st.session_state.step = 2
-            st.rerun()
+    if st.button("🎰 호선 번호 뽑기 시작!"):
+        image_place.image("image/gacha.gif", use_container_width=True)
+        time.sleep(2)
+        st.session_state.selected_line = f"{random.randint(1, 9)}호선"
+        st.session_state.step = 2
+        st.rerun()
 
+    # --- 2단계: 역 뽑기 ---
     elif st.session_state.step == 2:
         line = st.session_state.selected_line
         stations = df[df['호선_정리'] == line].reset_index(drop=True)
         st.markdown(f'<div class="step-box"><h3>✅ {line} 당첨!</h3></div>', unsafe_allow_html=True)
         image_place = st.empty()
         image_place.image("image/gacha2.png", use_container_width=True)
-        if st.button(f"🎲 {line} 역 추첨하기!"):
+            if st.button(f"🎲 {line} 역 번호 추첨하기!"):
             image_place.image("image/gacha.gif", use_container_width=True)
-            time.sleep(1.5)
+            time.sleep(2)
             lucky_idx = random.randint(0, len(stations) - 1)
             final_station = stations.iloc[lucky_idx]
             st.balloons()
