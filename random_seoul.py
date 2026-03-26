@@ -101,7 +101,7 @@ st.write("---")
 
 # --- 💬 방문자 피드백 (구글 폼 최종본) ---
 st.write("---")
-st.subheader("💬 다 어디서 보고 오신건가요?")
+st.subheader("💬 의견을 남겨주세요!")
 
 # 설문지 실제 주소 (임베딩용으로 변환)
 google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSctHf3pKpaTY6qUvo7KrEUpL6Zh2HXJF-ne-TxdCzl41PMw4g/viewform?embedded=true"
