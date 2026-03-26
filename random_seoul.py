@@ -165,13 +165,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- 💬 Giscus 댓글창 (맨 밑에 추가) ---
+# --- 💬 Giscus 댓글창 (수정 버전) ---
 st.write("---")
-st.subheader("💬 하고 싶은 말을 남겨주세요!")
 
-components.html(
-    f"""
-    <script src="https://giscus.app/client.js"
+# html 함수 안에 들어가는 내용은 f-string 대신 일반 문자열로 넣는 게 안전
+giscus_script = """
+<script src="https://giscus.app/client.js"
         data-repo="sojeong-cloud/seoul_subway_gacha"
         data-repo-id="R_kgDORu1prA"
         data-category="Announcements"
@@ -186,7 +185,6 @@ components.html(
         crossorigin="anonymous"
         async>
 </script>
-    """,
-    height=600,
-    scrolling=True
-)
+"""
+
+components.html(giscus_script, height=600, scrolling=True)
