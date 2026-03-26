@@ -102,7 +102,7 @@ st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; mar
 
 # 6. 💬 Giscus 댓글창 (절대 안 깨지는 주입 방식)
 st.write("---")
-st.subheader("💬 하고 싶은 말을 남겨주세요!")
+st.subheader("💬 다 어디서 보고 오신건가요")
 
 giscus_html = """
 <script src="https://giscus.app/client.js"
