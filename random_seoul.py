@@ -6,36 +6,34 @@ import json
 import os
 import streamlit.components.v1 as components
 
-# 1. 조회수 저장 로직
+# 1. 조회수 로직 (에러 방지 처리)
 counter_file = "view_count.json"
 if 'view_count_now' not in st.session_state:
     st.session_state.view_count_now = 0
 
 if 'is_counted' not in st.session_state:
+    current_views = 0
     if os.path.exists(counter_file):
-        with open(counter_file, "r") as f:
-            try:
+        try:
+            with open(counter_file, "r") as f:
                 data = json.load(f)
                 current_views = data.get("views", 0)
-            except:
-                current_views = 0
-    else:
-        current_views = 0
+        except: pass
+    
     current_views += 1
     try:
         with open(counter_file, "w") as f:
             json.dump({"views": current_views}, f)
-    except:
-        pass
+    except: pass # 서버 권한 에러 무시
+    
     st.session_state.view_count_now = current_views
     st.session_state.is_counted = True
 else:
     current_views = st.session_state.view_count_now
 
-# 2. 페이지 설정
+# 2. 페이지 설정 및 디자인
 st.set_page_config(page_title="메트로 가챠", page_icon="🚇", layout="centered")
 
-# 3. 디자인 CSS
 st.markdown("""
     <style>
     .stApp { background-color: #121212; color: white; }
@@ -47,7 +45,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 4. 데이터 로드
+# 3. 데이터 로드
 @st.cache_data
 def load_data():
     try:
@@ -58,13 +56,12 @@ def load_data():
             return f"{int(match.group())}호선" if match else "기타"
         df['호선_정리'] = df['호선'].apply(get_line_name)
         return df
-    except:
-        return None
+    except: return None
 
 df = load_data()
 if df is not None:
     st.markdown('<div class="main-title">🚇 메트로 가챠</div>', unsafe_allow_html=True)
-
+    
     if 'step' not in st.session_state:
         st.session_state.step = 1
 
@@ -74,7 +71,7 @@ if df is not None:
         image_place.image("image/gacha2.png", use_container_width=True)
         if st.button("🎰 호선 번호 뽑기 시작!"):
             image_place.image("image/gacha.gif", use_container_width=True)
-            time.sleep(2)
+            time.sleep(1.5)
             st.session_state.selected_line = f"{random.randint(1, 9)}호선"
             st.session_state.step = 2
             st.rerun()
@@ -87,26 +84,23 @@ if df is not None:
         image_place.image("image/gacha2.png", use_container_width=True)
         if st.button(f"🎲 {line} 역 추첨하기!"):
             image_place.image("image/gacha.gif", use_container_width=True)
-            time.sleep(2)
+            time.sleep(1.5)
             lucky_idx = random.randint(0, len(stations) - 1)
             final_station = stations.iloc[lucky_idx]
             st.balloons()
             st.markdown(f'<div class="result-card"><h1>{final_station["전철역명"]}</h1></div>', unsafe_allow_html=True)
             st.link_button(f"🍴 {final_station['전철역명']} 맛집 검색", f"https://map.naver.com/v5/search/{final_station['전철역명']} 맛집")
-        if st.button("🔄 처음부터 다시 하기"):
+        if st.button("🔄 다시 하기"):
             st.session_state.step = 1
             st.rerun()
 
-# 5. 하단 조회수
+# 4. 하단 조회수 및 Giscus
 st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">누적 조회수: {current_views}</div>', unsafe_allow_html=True)
-
-# --- 💬 Giscus 댓글창 (강제 로딩 버전) ---
 st.write("---")
 st.subheader("💬 다 어디서 보고 오신건가요")
 
-# 카테고리 ID가 General용인지 다시 한번 확인해줘!
-# 만약 General로 바꿨다면 보통 ID가 새로 발급돼.
-giscus_script = """
+
+giscus_code = """
 <div class="giscus"></div>
 <script src="https://giscus.app/client.js"
         data-repo="sojeong-cloud/seoul_subway_gacha"
@@ -124,5 +118,4 @@ giscus_script = """
         async>
 </script>
 """
-
-components.html(giscus_script, height=600, scrolling=True)
+components.html(giscus_code, height=800, scrolling=True)
