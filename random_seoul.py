@@ -6,14 +6,12 @@ import json
 import os
 import streamlit.components.v1 as components
 
-# 1. 조회수 저장 로직 (파일 기반)
+# 1. 조회수 저장 로직
 counter_file = "view_count.json"
-
 if 'view_count_now' not in st.session_state:
     st.session_state.view_count_now = 0
 
 if 'is_counted' not in st.session_state:
-    # 파일 읽기 및 조회수 증가
     current_views = 0
     if os.path.exists(counter_file):
         try:
@@ -22,14 +20,12 @@ if 'is_counted' not in st.session_state:
                 current_views = data.get("views", 0)
         except:
             current_views = 0
-    
     current_views += 1
     try:
         with open(counter_file, "w") as f:
             json.dump({"views": current_views}, f)
     except:
-        pass # 서버 권한 문제 시 무시
-    
+        pass
     st.session_state.view_count_now = current_views
     st.session_state.is_counted = True
 else:
@@ -38,36 +34,15 @@ else:
 # 2. 페이지 설정
 st.set_page_config(page_title="메트로 가챠", page_icon="🚇", layout="centered")
 
-# 3. 디자인 CSS (배경색 #121212 적용)
+# 3. 디자인 CSS
 st.markdown("""
     <style>
     .stApp { background-color: #121212; color: white; }
     .main-title { color: #FFDD59; text-align: center; font-size: 40px; font-weight: bold; margin-bottom: 20px; }
     .step-box { background-color: #1E1E1E; padding: 20px; border-radius: 15px; border: 2px solid #333; margin-bottom: 20px; text-align: center; }
     .result-card { background-color: #2D3436; padding: 30px; border-radius: 20px; border: 3px solid #FFDD59; text-align: center; }
-    
-    /* 버튼 스타일 */
-    div.stButton > button {
-        background-color: #FFDD59 !important;
-        color: #000000 !important;
-        font-weight: bold !important;
-        border-radius: 10px !important;
-        border: none !important;
-        width: 100% !important;
-        height: 50px !important;
-    }
-    
-    /* 링크 버튼 스타일 */
-    .stLinkButton a {
-        background-color: #FFDD59 !important;
-        color: #000000 !important;
-        font-weight: bold !important;
-        text-decoration: none !important;
-        display: block !important;
-        text-align: center !important;
-        padding: 10px !important;
-        border-radius: 10px !important;
-    }
+    div.stButton > button { background-color: #FFDD59 !important; color: #000000 !important; font-weight: bold !important; border-radius: 10px !important; width: 100% !important; height: 50px !important; }
+    .stLinkButton a { background-color: #FFDD59 !important; color: #000000 !important; font-weight: bold !important; text-decoration: none !important; display: block !important; text-align: center !important; padding: 10px !important; border-radius: 10px !important; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -124,9 +99,12 @@ if df is not None:
             st.balloons()
             st.markdown(f"""
                 <div class="result-card">
-                    <h1 style="font-size: 50px; margin: 10px 0;">{final_station['전철역명']}</h1>
+                    <h2 style="color: #FFDD59;">🎉 {lucky_idx + 1}번 역 당첨!</h2>
+                    <h1 style="font-size: 60px; margin: 10px 0; color: white;">{final_station['전철역명']}</h1>
+                    <p style="font-size: 20px; color: #BDC3C7;">({final_station['전철명명(영문)']})</p>
                 </div>
             """, unsafe_allow_html=True)
+            
             st.markdown("<br>", unsafe_allow_html=True)
             st.link_button(f"🍴 {final_station['전철역명']} 맛집 검색", f"https://map.naver.com/v5/search/{final_station['전철역명']} 맛집")
         
@@ -134,22 +112,15 @@ if df is not None:
             st.session_state.step = 1
             st.rerun()
 
-# 5. 하단 조회수
+# 5. 하단 조회수 및 피드백
 st.markdown(f'<div style="text-align: right; color: gray; font-size: 0.8rem; margin-top: 50px;">누적 조회수: {current_views}</div>', unsafe_allow_html=True)
-
-# 6. 💬 방문자 피드백 (디자인 수정 버전)
 st.write("---")
 st.markdown('<h3 style="text-align: center;">💬 의견을 남겨주세요!</h3>', unsafe_allow_html=True)
 
-# 구글 폼 임베딩용 주소
 my_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSctHf3pKpaTY6qUvo7KrEUpL6Zh2HXJF-ne-TxdCzl41PMw4g/viewform?embedded=true"
-
-# 배경색(#1E1E1E) 박스로 감싸서 일체감 부여
 st.markdown(f"""
     <div style="background-color: #1E1E1E; padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px;">
-        <iframe src="{my_form_url}" 
-                width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">로드 중…</iframe>
+        <iframe src="{my_form_url}" width="100%" height="800" frameborder="0">로드 중…</iframe>
     </div>
 """, unsafe_allow_html=True)
-
 st.link_button("📢 직접 의견 남기러 가기 (새 창)", my_form_url)
