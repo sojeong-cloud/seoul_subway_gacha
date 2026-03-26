@@ -4,6 +4,7 @@ import random
 import time
 import json
 import os
+import streamlit.components.v1 as components
 
 # 1. 조회수 저장 로직 (파일 기반)
 counter_file = "view_count.json"
@@ -162,4 +163,30 @@ st.markdown(
     </div>
     """,
     unsafe_allow_html=True
+)
+
+# --- 💬 Giscus 댓글창 (맨 밑에 추가) ---
+st.write("---")
+st.subheader("💬 하고 싶은 말을 남겨주세!")
+
+components.html(
+    f"""
+    <script src="https://giscus.app/client.js"
+        data-repo="sojeong-cloud/seoul_subway_gacha"
+        data-repo-id="R_kgDORu1prA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDORu1prM4C5UQp"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark"
+        data-lang="ko"
+        crossorigin="anonymous"
+        async>
+</script>
+    """,
+    height=600,
+    scrolling=True
 )
